@@ -162,12 +162,14 @@ class InnerNode(Tree[Ord]):
 def rot_left(n: Tree[Ord]) -> Tree[Ord]:
     """Rotate n left."""
     ...
+    n, n.left, n.left.left, n.left.right, n.right = n.right, n, n.left, n.right.left, n.right.right
     return n
 
 
 def rot_right(n: Tree[Ord]) -> Tree[Ord]:
     """Rotate n right."""
     ...
+    n.right, n, n.left, n.left.left, n.left.right = n.right.right, n.right, n, n.left, n.right.left
     return n
 
 
@@ -179,6 +181,26 @@ def balance(n: Tree[Ord]) -> Tree[Ord]:
     if n.bf >= 2:   # right-heavy
         return rot_left(n)
     return n
+
+#def new_balance(n: Tree[Ord]) -> Tree[Ord]:
+    # if -1 <= n.bf <= 1:
+    #     #return n
+    # if n.bf >= -2 or 2:
+    #     if n.left.bf >= 2 or -2                     #mmmh dont know if 1 and -1 is allowed for the inner child
+        #  check inner grandchild 
+        #  check heaviness
+        #       if heavy (n.left.bf>0):
+        #           rotate child left (rot_left(n.right))
+        #           rotate root  right (rot_right(n))
+        #   else: ()
+        #           rotate child right (rot_right(n.left))
+        #           rotate root  left  (rot_left(n))
+    #      else: (not heavy)
+        #      if right heavy (n.bf > 0):
+        #           rotate root left
+        #      else (left heavy) (n.bf < 0):
+        #           rotate root right
+        #return n 
 
 
 def contains(t: Tree[Ord], val: Ord) -> bool:
