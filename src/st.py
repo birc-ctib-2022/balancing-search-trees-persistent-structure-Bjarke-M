@@ -162,12 +162,14 @@ class InnerNode(Tree[Ord]):
 def rot_left(n: Tree[Ord]) -> Tree[Ord]:
     """Rotate n left."""
     ...
+    n, n.left, n.left.left, n.left.right, n.right = n.right, n, n.left, n.right.left, n.right.right
     return n
 
 
 def rot_right(n: Tree[Ord]) -> Tree[Ord]:
     """Rotate n right."""
     ...
+    n.right, n, n.left, n.left.left, n.left.right = n.right.right, n.right, n, n.left, n.right.left
     return n
 
 
@@ -175,8 +177,12 @@ def balance(n: Tree[Ord]) -> Tree[Ord]:
     """Re-organize n to balance it."""
     # Simple rotation solution
     if n.bf <= -2:  # left-heavy
+        if n.left.bf >=1:
+            n = InnerNode(n.value, rot_left(n.left), n.right)
         return rot_right(n)
     if n.bf >= 2:   # right-heavy
+        if n.right.bf <= -1:
+            n = InnerNode(n.value, n.left, rot_right(n.right))
         return rot_left(n)
     return n
 
