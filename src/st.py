@@ -177,30 +177,14 @@ def balance(n: Tree[Ord]) -> Tree[Ord]:
     """Re-organize n to balance it."""
     # Simple rotation solution
     if n.bf <= -2:  # left-heavy
+        if n.left.bf >=1:
+            n = InnerNode(n.value, rot_left(n.left), n.right)
         return rot_right(n)
     if n.bf >= 2:   # right-heavy
+        if n.right.bf <= -1:
+            n = InnerNode(n.value, n.left, rot_right(n.right))
         return rot_left(n)
     return n
-
-#def new_balance(n: Tree[Ord]) -> Tree[Ord]:
-    # if -1 <= n.bf <= 1:
-    #     #return n
-    # if n.bf >= -2 or 2:
-    #     if n.left.bf >= 2 or -2                     #mmmh dont know if 1 and -1 is allowed for the inner child
-        #  check inner grandchild 
-        #  check heaviness
-        #       if heavy (n.left.bf>0):
-        #           rotate child left (rot_left(n.right))
-        #           rotate root  right (rot_right(n))
-        #   else: ()
-        #           rotate child right (rot_right(n.left))
-        #           rotate root  left  (rot_left(n))
-    #      else: (not heavy)
-        #      if right heavy (n.bf > 0):
-        #           rotate root left
-        #      else (left heavy) (n.bf < 0):
-        #           rotate root right
-        #return n 
 
 
 def contains(t: Tree[Ord], val: Ord) -> bool:
